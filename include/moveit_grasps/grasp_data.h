@@ -172,6 +172,9 @@ public:
   //////////////////////////////////////
   double active_suction_range_x_;
   double active_suction_range_y_;
+
+  int suction_regions_x_;
+  int suction_regions_y_;
 };
 
 }  // namespace

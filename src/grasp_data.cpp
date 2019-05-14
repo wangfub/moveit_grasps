@@ -140,6 +140,8 @@ bool GraspData::loadGraspData(const ros::NodeHandle& nh, const std::string& end_
   {
     error += !rosparam_shortcuts::get(parent_name, child_nh, "active_suction_range_x", active_suction_range_x_);
     error += !rosparam_shortcuts::get(parent_name, child_nh, "active_suction_range_y", active_suction_range_y_);
+    child_nh.param<int>("suction_regions_x", suction_regions_x_, 1);
+    child_nh.param<int>("suction_regions_y", suction_regions_y_, 1);
   }
   rosparam_shortcuts::shutdownIfError(parent_name, error);
 
