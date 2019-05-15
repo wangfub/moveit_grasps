@@ -65,6 +65,37 @@ enum EndEffectorType
   SUCTION = 2
 };
 
+struct SuctionVoxel
+{
+  SuctionVoxel()
+  : center_point_(Eigen::Vector3d(0, 0, 0))
+  , top_left_(Eigen::Vector3d(0, 0, 0))
+  , top_right_(Eigen::Vector3d(0, 0, 0))
+  , bottom_left_(Eigen::Vector3d(0, 0, 0))
+  , bottom_right_(Eigen::Vector3d(0, 0, 0)) {}
+
+  SuctionVoxel(Eigen::Vector3d center_point)
+  : SuctionVoxel()
+  {
+    center_point_ = center_point;
+  }
+
+  SuctionVoxel(Eigen::Vector3d center_point, double x_width, double y_width)
+  : SuctionVoxel(center_point)
+  {
+    top_left = center_point + Eigen::Vector3d(-x_width/2.0, y_width/2.0, 0);
+    top_right = center_point + Eigen::Vector3d(x_width/2.0, y_width/2.0, 0);
+    bottom_left = center_point + Eigen::Vector3d(-x_width/2.0, -y_width/2.0, 0);
+    bottom_right = center_point + Eigen::Vector3d(x_width/2.0, -y_width/2.0, 0);
+  }
+
+  Eigen::Vector3d center_point_;
+  Eigen::Vector3d top_left_;
+  Eigen::Vector3d top_right_;
+  Eigen::Vector3d bottom_left_;
+  Eigen::Vector3d bottom_right_;
+};
+
 class GraspData
 {
 public:
@@ -128,6 +159,11 @@ public:
    */
   void print();
 
+  /**
+   * \brief
+   */
+  bool getSuctionRegionDims(std::size_t suction_voxel_index_x, std::size_t suction_voxel_index_y, SuctionVoxelDimensions& dimensions);
+
 public:
   // A representation of the gripper type as an integer. See EndEffectorType for values
   EndEffectorType end_effector_type_;
@@ -175,6 +211,7 @@ public:
 
   int suction_regions_x_;
   int suction_regions_y_;
+  std::vector<SuctionVoxel> suction_voxels_;
 };
 
 }  // namespace

@@ -142,6 +142,13 @@ bool GraspData::loadGraspData(const ros::NodeHandle& nh, const std::string& end_
     error += !rosparam_shortcuts::get(parent_name, child_nh, "active_suction_range_y", active_suction_range_y_);
     child_nh.param<int>("suction_regions_x", suction_regions_x_, 1);
     child_nh.param<int>("suction_regions_y", suction_regions_y_, 1);
+    // for (std::size_t i=0; i < suction_regions_x_; ++i)
+    // {
+    //   for(std::size_t j=0; j < suction_regions_y_; ++j)
+    //   {
+    //     Eigen::Vector3d center_point(0,0,0);
+    //     suction_voxels_.push_back(SuctionVoxel())
+    // }
   }
   rosparam_shortcuts::shutdownIfError(parent_name, error);
 
